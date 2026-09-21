@@ -48,6 +48,15 @@ else
   fail=1
 fi
 
+# 5. Drift gate
+echo "--- 5. drift:gate ---"
+if bash scripts/drift-gate.sh; then
+  echo "ok drift:gate"
+else
+  echo "FAIL drift:gate"
+  fail=1
+fi
+
 if [ "$fail" -eq 0 ]; then
   echo "================================================================"
   echo " LOCAL-CI: ALL GREEN"

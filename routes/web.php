@@ -1,10 +1,30 @@
 <?php
 
 use App\Http\Controllers\PublicSignoffController;
+use App\Models\Milestone;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
-    return response()->json(['name' => 'TerminLock', 'status' => 'operational']);
+    $projects = Project::with(['client', 'milestones'])->orderByDesc('created_at')->get();
+
+    $totalContractValue = (int) Project::sum('total_amount');
+    $totalCashCollected = (int) Milestone::where('status', 'paid')->sum('amount');
+    $cashAtRisk = (int) Milestone::whereIn('status', ['awaiting_signoff', 'bast_signed', 'invoiced'])->sum('amount');
+    $retentionHeld = (int) Milestone::where('status', 'retention_hold')->sum('amount');
+    $retentionMatured = (int) Milestone::where('status', 'retention_matured')->sum('amount');
+
+    return Inertia::render('Dashboard', [
+        'metrics' => [
+            'total_contract_value' => $totalContractValue,
+            'total_cash_collected' => $totalCashCollected,
+            'cash_at_risk' => $cashAtRisk,
+            'retention_held' => $retentionHeld,
+            'retention_matured' => $retentionMatured,
+        ],
+        'projects' => $projects,
+    ]);
 });
 
 Route::prefix('sign')->group(function () {

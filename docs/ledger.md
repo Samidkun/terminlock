@@ -12,7 +12,7 @@ Handoff: `HANDOFF.md`
 | T2 | Milestone FSM & Deliverables Engine | AC-3, AC-4 | DONE | tests/Feature/DeliverableApiTest.php, tests/Feature/SignoffRequestTest.php (3 passed, 14 assertions, mutation confirmed) |
 | T3 | Zero-Login Client Sign-off Portal & Immutable BAST | AC-5, AC-6, AC-7, AC-8 | DONE | tests/Feature/PublicSignoffTest.php (4 passed, 22 assertions, mutation confirmed) |
 | T4 | Invoicing, Payment Settlement & Retention Watcher | AC-9, AC-10, AC-11 | DONE | tests/Feature/InvoiceApiTest.php, tests/Feature/RetentionWatcherTest.php (4 passed, 15 assertions, mutation confirmed) |
-| T5 | Inertia.js React UI, Dashboard & E2E Tests | AC-12 | PENDING | - |
+| T5 | Inertia.js React UI, Dashboard & E2E Tests | AC-12 | DONE | tests/Feature/DashboardMetricsTest.php, e2e/terminlock.spec.ts (2 passed in 1.4s, drift gate 12/12 PASS, local-ci ALL GREEN) |
 
 ---
 

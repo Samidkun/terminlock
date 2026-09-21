@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\MilestoneController;
 use App\Http\Controllers\Api\ProjectController;
@@ -18,4 +19,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/milestones/{id}/invoice', [InvoiceController::class, 'issue']);
     Route::post('/invoices/{id}/pay', [InvoiceController::class, 'pay']);
+
+    Route::get('/dashboard/metrics', [DashboardController::class, 'metrics']);
 });

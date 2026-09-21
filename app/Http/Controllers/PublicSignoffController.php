@@ -7,6 +7,8 @@ use App\Models\SignoffRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Inertia\Response as InertiaResponse;
 
 class PublicSignoffController extends Controller
 {
@@ -44,7 +46,7 @@ class PublicSignoffController extends Controller
         return ['signoff' => $signoff];
     }
 
-    public function show(string $token): JsonResponse
+    public function show(Request $request, string $token): JsonResponse|InertiaResponse
     {
         $res = $this->resolveToken($token);
         if (isset($res['error'])) {
@@ -65,17 +67,26 @@ class PublicSignoffController extends Controller
             ];
         });
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'project_name' => $project->name,
-                'contract_number' => $project->contract_number,
-                'milestone_name' => $milestone->name,
-                'amount' => $milestone->amount,
-                'deliverables' => $deliverablesData,
-                'expires_at' => $signoff->expires_at->toIso8601String(),
-                'status' => $signoff->status,
-            ],
+        $payload = [
+            'project_name' => $project->name,
+            'contract_number' => $project->contract_number,
+            'milestone_name' => $milestone->name,
+            'amount' => $milestone->amount,
+            'deliverables' => $deliverablesData,
+            'expires_at' => $signoff->expires_at->toIso8601String(),
+            'status' => $signoff->status,
+        ];
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $payload,
+            ]);
+        }
+
+        return Inertia::render('SignoffPortal', [
+            'token' => $token,
+            'data' => $payload,
         ]);
     }
 

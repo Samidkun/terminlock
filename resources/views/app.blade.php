@@ -20,7 +20,7 @@
         @viteReactRefresh
         {{-- Single entry: app.jsx resolves every page with import.meta.glob,
              so adding a page never requires touching this template. --}}
-        @vite('resources/js/app.jsx')
+        @vite('resources/js/app.tsx')
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

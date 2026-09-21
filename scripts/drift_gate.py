@@ -26,8 +26,8 @@ fail: list[str] = []
 text = SPEC.read_text(encoding="utf-8")
 current, buf = None, []
 for line in text.splitlines():
-    m = re.match(r"^(AC-\d+)\b", line)
-    if m:
+    m = re.search(r"\b(AC-\d+)\b", line)
+    if m and line.startswith("#"):
         if current:
             blocks.append((current, "\n".join(buf)))
         current, buf = m.group(1), [line]
@@ -36,9 +36,13 @@ for line in text.splitlines():
 if current:
     blocks.append((current, "\n".join(buf)))
 
+if not blocks:
+    print("DRIFT GATE ERROR: No AC-N blocks found in spec.md")
+    sys.exit(1)
+
 verify_refs: set[str] = set()
 for ac, block in blocks:
-    vs = re.findall(r"Verify:\s*([\w./\\-]+)::(\w+)", block)
+    vs = re.findall(r"Verify:\*{0,2}\s*`?([\w./\\-]+)::(\w+)`?", block)
     if not vs:
         fail.append(f"{ac} has no Verify: line")
     for f, fn in vs:
