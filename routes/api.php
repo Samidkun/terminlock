@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\MilestoneController;
 use App\Http\Controllers\Api\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -14,4 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/milestones/{id}/deliverables', [MilestoneController::class, 'uploadDeliverable']);
     Route::post('/milestones/{id}/request-signoff', [MilestoneController::class, 'requestSignoff']);
+
+    Route::post('/milestones/{id}/invoice', [InvoiceController::class, 'issue']);
+    Route::post('/invoices/{id}/pay', [InvoiceController::class, 'pay']);
 });
