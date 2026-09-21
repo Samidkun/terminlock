@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Milestone extends Model
 {
@@ -31,5 +33,20 @@ class Milestone extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function deliverables(): HasMany
+    {
+        return $this->hasMany(Deliverable::class);
+    }
+
+    public function signoffRequests(): HasMany
+    {
+        return $this->hasMany(SignoffRequest::class);
+    }
+
+    public function latestSignoffRequest(): HasOne
+    {
+        return $this->hasOne(SignoffRequest::class)->latestOfMany();
     }
 }
