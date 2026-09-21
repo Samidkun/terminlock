@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {{-- Read by fetch()-based calls (DOI lookup, .bib upload) so they
+             send a valid CSRF token without pulling in a whole HTTP client. --}}
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" rel="stylesheet" />
+
+        {{-- The nonce lets these inline scripts run under a strict CSP.
+             @routes = Ziggy route table (~23 kB inline).
+             @vite  = module tag + Laravel's inline prefetch script. --}}
+        @routes(null, $cspNonce ?? null)
+        @viteReactRefresh
+        {{-- Single entry: app.jsx resolves every page with import.meta.glob,
+             so adding a page never requires touching this template. --}}
+        @vite('resources/js/app.jsx')
+        @inertiaHead
+    </head>
+    <body class="font-sans antialiased">
+        @inertia
+    </body>
+</html>
