@@ -2,6 +2,12 @@
 
 > **Agency milestone billing, digital BAST sign-off, and retention payment tracking system.**
 
+
+
+<p align="center">
+  <img src="docs/screenshots/preview.png" alt="Application Preview" width="100%" style="border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);" />
+</p>
+
 TerminLock solves the multi-million rupiah cash flow leak suffered by software houses, digital agencies, and project contractors: **billing limbo** (uncollected termin payments due to unsigned Berita Acara Serah Terima) and **forgotten retentions** (unclaimed 5–10% warranty retention funds after months of project completion).
 
 ---
