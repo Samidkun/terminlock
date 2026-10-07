@@ -36,3 +36,11 @@ Thumbs.db
 *.env.bak
 .env.old
 .env.save
+
+# Laravel storage ignores
+/storage/app/*
+!/storage/app/public
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
